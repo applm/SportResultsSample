@@ -1,0 +1,41 @@
+# A sport result with attributes name, place and duration
+type SportResult {
+  duration: String!
+  name: String!
+  place: String!
+  uid: String!
+}
+
+# Input of a sport result without id
+input SportResultInput {
+  duration: String!
+  name: String!
+  place: String!
+}
+
+# The Short scalar type represents a signed 16-bit numeric non-fractional value
+scalar Short
+
+# The Long scalar type represents a signed 64-bit numeric non-fractional value
+scalar Long
+
+# Query object
+type Query {
+  # Get a sport result by uid
+  getSportResult(uid: String!): SportResult
+
+  # List all sport results
+  listSportResults: [SportResult!]!
+}
+
+# Mutation object
+type Mutation {
+  # Add a sport result
+  addSportResult(sportResultInput: SportResultInput!): SportResult
+
+  # Update a sport result
+  updateSportResult(
+    uid: String!
+    sportResultInput: SportResultInput!
+  ): SportResult
+}

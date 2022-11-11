@@ -1,0 +1,22 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.apollographql)
+}
+
+android {
+    compileSdk 33
+    namespace 'com.mappl.core'
+
+
+}
+
+dependencies {
+    implementation(project(":core:model"))
+    implementation libs.apollo.runtime
+    implementation libs.okthttp
+}
+
+apollo {
+    packageName = "com.mappl.sportresultsample.core.network"
+}
