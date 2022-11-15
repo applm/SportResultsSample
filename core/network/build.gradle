@@ -1,14 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin'
     alias(libs.plugins.apollographql)
-}
-
-android {
-    compileSdk 33
-    namespace 'com.mappl.core'
-
-
 }
 
 dependencies {
