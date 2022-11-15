@@ -1,0 +1,8 @@
+plugins {
+    id("nowinandroid.android.feature")
+    id("nowinandroid.android.library.compose")
+}
+
+android {
+    namespace 'com.mappl.sport_results_list'
+}
