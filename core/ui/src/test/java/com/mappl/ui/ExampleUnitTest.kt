@@ -1,4 +1,4 @@
-package com.mappl.mylibrary
+package com.mappl.ui
 
 import org.junit.Test
 
