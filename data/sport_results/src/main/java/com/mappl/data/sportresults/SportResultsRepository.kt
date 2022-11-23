@@ -3,10 +3,9 @@ package com.mappl.data.sportresults
 import com.mappl.core.network.GraphQLApi
 import com.mappl.core.network.SportResultsApi
 import com.mappl.model.SportResult
+import javax.inject.Inject
 
-class SportResultsRepository {
-    //TODO: Provide via DI
-    private val sportResultsRemote = GraphQLApi()
+class SportResultsRepository @Inject constructor(private val sportResultsRemote: GraphQLApi){
     //  val sportResultsLocal = todo()
 
     /**

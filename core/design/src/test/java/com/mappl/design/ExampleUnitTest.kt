@@ -1,4 +1,4 @@
-package com.mappl.sport_results_list
+package com.mappl.design
 
 import org.junit.Test
 

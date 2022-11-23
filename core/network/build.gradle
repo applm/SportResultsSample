@@ -1,6 +1,11 @@
 plugins {
-    id 'kotlin'
+    id 'nowinandroid.android.library'
+    id 'nowinandroid.android.hilt'
     alias(libs.plugins.apollographql)
+}
+
+android {
+    namespace 'com.mappl.sportresultsample.core.network'
 }
 
 dependencies {

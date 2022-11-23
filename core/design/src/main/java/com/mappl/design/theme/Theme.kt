@@ -1,4 +1,4 @@
-package com.mappl.sportresultsample.ui.theme
+package com.mappl.design.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

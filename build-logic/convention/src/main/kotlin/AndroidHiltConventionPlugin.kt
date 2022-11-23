@@ -25,7 +25,7 @@ class AndroidHiltConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("org.jetbrains.kotlin.kapt")
-                //apply("dagger.hilt.android.plugin")
+                apply("dagger.hilt.android.plugin")
             }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
