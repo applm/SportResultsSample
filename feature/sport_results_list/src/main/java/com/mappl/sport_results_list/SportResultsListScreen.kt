@@ -11,23 +11,33 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mappl.design.theme.MyApplicationTheme
 import com.mappl.model.SportResult
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SportResultsRoute(
-    navigateToResultDetail: (String) -> Unit,
+    navigateToResultDetail: (String) -> Unit = {
+        // TODO("Navigate to result detail in detail feature")
+    },
     viewModel: SportResultsListViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    SportResultsScreen(uiState = uiState, navigateToResultDetail = navigateToResultDetail)
 }
 
 @Composable
 fun SportResultsScreen(
-    uiState: SportResultListUiState, modifier: Modifier = Modifier
+    uiState: SportResultListUiState,
+    navigateToResultDetail: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     if (uiState is SportResultListUiState.Success) {
         LazyColumn {
@@ -72,7 +82,8 @@ fun DefaultPreview() {
                     SportResult("", "name2", "place", "duration"),
                     SportResult("", "name3", "place", "duration"),
                 )
-            )
+            ),
+            navigateToResultDetail = {}
         )
     }
 }

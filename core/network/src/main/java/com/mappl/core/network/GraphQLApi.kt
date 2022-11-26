@@ -3,18 +3,17 @@ package com.mappl.core.network
 import com.apollographql.apollo3.ApolloClient
 import com.mappl.model.SportResult
 import com.mappl.sportresultsample.core.network.GetListOfSportResultsQuery
-
-const val LOCALHOST = "http://127.0.0.1:8080"
+import javax.inject.Inject
 
 /**
  * Interface to the GraphQL API queries and mutations.
  */
-class GraphQLApi : SportResultsApi {
+class GraphQLApi @Inject constructor(private val apolloClient: ApolloClient) : SportResultsApi {
 
-    // TODO: Provide via DI
-    val apolloClient = ApolloClient.Builder()
-        .serverUrl(LOCALHOST)
-        .build()
+    // // TODO: Provide via DI
+    // val apolloClient = ApolloClient.Builder()
+    //     .serverUrl(LOCALHOST)
+    //     .build()
 
     override suspend fun getSportResults(): List<SportResult> {
         apolloClient.query(GetListOfSportResultsQuery()).execute().let { response ->
