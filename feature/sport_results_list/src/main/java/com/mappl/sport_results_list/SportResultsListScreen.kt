@@ -4,7 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -13,19 +14,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mappl.design.theme.MyApplicationTheme
 import com.mappl.model.SportResult
 
 @Composable
-fun TestButton() {
-    Button(onClick = { /*TODO*/ }) {
-        Text("Button")
-    }
+fun SportResultsRoute(
+    navigateToResultDetail: (String) -> Unit,
+    viewModel: SportResultsListViewModel = hiltViewModel()
+) {
 }
 
 @Composable
-fun SportResultsList() {
-    TestButton()
+fun SportResultsScreen(
+    uiState: SportResultListUiState, modifier: Modifier = Modifier
+) {
+    if (uiState is SportResultListUiState.Success) {
+        LazyColumn {
+            items(uiState.sportResults) { sportResult ->
+                SportResultCard(sportResult)
+                Divider()
+            }
+        }
+    } else {
+        Text("Loading")
+    }
 }
 
 @Composable
@@ -52,6 +65,14 @@ fun SportResultCard(data: SportResult) {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        SportResultCard(SportResult("","name", "place", "duration"))
+        SportResultsScreen(
+            uiState = SportResultListUiState.Success(
+                listOf(
+                    SportResult("", "name", "place", "duration"),
+                    SportResult("", "name2", "place", "duration"),
+                    SportResult("", "name3", "place", "duration"),
+                )
+            )
+        )
     }
 }
