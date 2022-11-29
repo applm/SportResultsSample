@@ -2,9 +2,11 @@ package com.mappl.sportresultsample.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
@@ -21,7 +23,11 @@ fun SportResultsApp() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            Scaffold { padding ->
+            Scaffold(floatingActionButton = {
+                FloatingActionButton(onClick = { /*TODO*/ }) {
+                    Text(text = "+", style = MaterialTheme.typography.h4)
+                }
+            }) { padding ->
                 SportResultsNavHost(
                     navHostController = navController,
                     modifier = Modifier.padding(padding)
