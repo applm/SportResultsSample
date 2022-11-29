@@ -43,7 +43,6 @@ fun SportResultsScreen(
         LazyColumn {
             items(uiState.sportResults) { sportResult ->
                 SportResultCard(sportResult)
-                Divider()
             }
         }
     } else {
@@ -56,11 +55,11 @@ fun SportResultCard(data: SportResult) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(4.dp),
         elevation = 8.dp,
         backgroundColor = MaterialTheme.colors.primary,
     ) {
-        Column {
+        Column(modifier = Modifier.padding(8.dp)) {
             Text(text = data.name)
             Divider(color = MaterialTheme.colors.onPrimary, thickness = 1.dp)
             Row {

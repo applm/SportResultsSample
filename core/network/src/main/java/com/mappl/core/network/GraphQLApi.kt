@@ -10,11 +10,6 @@ import javax.inject.Inject
  */
 class GraphQLApi @Inject constructor(private val apolloClient: ApolloClient) : SportResultsApi {
 
-    // // TODO: Provide via DI
-    // val apolloClient = ApolloClient.Builder()
-    //     .serverUrl(LOCALHOST)
-    //     .build()
-
     override suspend fun getSportResults(): List<SportResult> {
         apolloClient.query(GetListOfSportResultsQuery()).execute().let { response ->
             if (response.hasErrors()) {

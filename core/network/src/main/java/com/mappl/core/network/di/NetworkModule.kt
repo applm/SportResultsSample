@@ -9,7 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-const val LOCALHOST = "http://127.0.0.1:8080"
+const val LOCALHOST_FROM_EMULATOR = "http://10.0.2.2:8080/graphql"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -20,6 +20,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideApolloClient(): ApolloClient = ApolloClient.Builder()
-        .serverUrl(LOCALHOST)
+        .serverUrl(LOCALHOST_FROM_EMULATOR)
         .build()
 }
