@@ -49,6 +49,7 @@ android {
 
 dependencies {
     implementation(project(':feature:sport_results_list'))
+    implementation(project(':feature:sport_result_detail'))
     implementation(project(':core:design'))
 
     implementation(libs.androidx.activity.compose)

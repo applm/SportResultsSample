@@ -35,4 +35,8 @@ android {
 
 dependencies {
     api(project(":core:model"))
+
+    implementation ("androidx.compose.ui:ui")
+    implementation ("androidx.compose.ui:ui-tooling-preview")
+    implementation ("androidx.compose.material:material")
 }
