@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -39,25 +40,33 @@ fun SportResultsScreen(
     navigateToResultDetail: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (uiState is SportResultListUiState.Success) {
-        LazyColumn {
-            items(uiState.sportResults) { sportResult ->
-                SportResultCard(sportResult)
+    when (uiState) {
+        is SportResultListUiState.Success -> {
+            LazyColumn {
+                items(uiState.sportResults) { sportResult ->
+                    SportResultCard(sportResult, navigateToResultDetail)
+                }
             }
         }
-    } else {
-        Text("Loading")
+        is SportResultListUiState.Error -> {
+            Text(text = "Error")
+        }
+        else -> {
+            Text("Loading")
+        }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SportResultCard(data: SportResult) {
+fun SportResultCard(data: SportResult, navigateToResultDetail: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp),
         elevation = 8.dp,
         backgroundColor = MaterialTheme.colors.primary,
+        onClick = { navigateToResultDetail(data.uid) }
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             Text(text = data.name)

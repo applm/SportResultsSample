@@ -29,4 +29,8 @@ class SportResultDetailViewModel @Inject constructor() : ViewModel() {
     fun updateDuration(duration: String) {
         this.duration = duration
     }
+
+    fun onSaveClicked() {
+        //TODO
+    }
 }

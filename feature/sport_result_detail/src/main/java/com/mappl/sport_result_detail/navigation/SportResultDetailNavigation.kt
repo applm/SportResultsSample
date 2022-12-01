@@ -13,8 +13,8 @@ fun NavController.navigateToSportResultDetail(navOptions: NavOptions? = null) {
     this.navigate(sportResultDetailRoute, navOptions)
 }
 
-fun NavGraphBuilder.sportResultDetailDialog() {
+fun NavGraphBuilder.sportResultDetailDialog(navController: NavController) {
     dialog(route = sportResultDetailRoute) {
-        SportResultDetailDialogRoute()
+        SportResultDetailDialogRoute(navController)
     }
 }

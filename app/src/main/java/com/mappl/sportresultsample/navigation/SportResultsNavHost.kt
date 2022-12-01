@@ -21,6 +21,6 @@ fun SportResultsNavHost (
         modifier = modifier
     ) {
         sportResultsListScreen()
-        sportResultDetailDialog()
+        sportResultDetailDialog(navHostController)
     }
 }

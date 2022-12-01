@@ -8,11 +8,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed interface SportResultListUiState {
     object Loading : SportResultListUiState
+    object Error : SportResultListUiState
     data class Success(val sportResults: List<SportResult>) : SportResultListUiState
 }
 
@@ -27,10 +29,11 @@ class SportResultsListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            sportResultsListRepository.remoteSportResultsStream.collect { sportResults ->
-                _uiState.value = SportResultListUiState.Success(sportResults)
-            }
+            sportResultsListRepository.remoteSportResultsStream
+                .catch { _uiState.value = SportResultListUiState.Error }
+                .collect { sportResults ->
+                    _uiState.value = SportResultListUiState.Success(sportResults)
+                }
         }
     }
-
 }
