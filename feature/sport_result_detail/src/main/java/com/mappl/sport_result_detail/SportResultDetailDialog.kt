@@ -19,8 +19,7 @@ import androidx.navigation.NavController
 @Composable
 fun SportResultDetailDialogRoute(
     navController: NavController,
-    viewModel: SportResultDetailViewModel = hiltViewModel(),
-    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
+    viewModel: SportResultDetailViewModel = hiltViewModel()
 ) {
     Card() {
         Column(modifier = Modifier.padding(8.dp)) {
@@ -46,7 +45,7 @@ fun SportResultDetailDialogRoute(
                 }
                 Button(modifier = Modifier.weight(0.5f).padding(horizontal = 8.dp),
                     onClick = {
-                        viewModel.onSaveClicked(lifecycleOwner)
+                        viewModel.onSaveClicked()
                         navController.popBackStack()
                     }
                 ) {

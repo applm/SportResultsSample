@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.mappl.data.sportresults.SportResultsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -38,8 +39,8 @@ class SportResultDetailViewModel @Inject constructor(
         this.duration = duration
     }
 
-    fun onSaveClicked(lifecycleOwner: LifecycleOwner) {
-        lifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+    fun onSaveClicked() {
+        viewModelScope.launch(Dispatchers.IO) {
             sportResultsListRepository.addSportResult(
                 name = name,
                 place = place,
