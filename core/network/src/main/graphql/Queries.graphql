@@ -6,3 +6,9 @@ query GetListOfSportResults {
     duration
   }
 }
+
+mutation AddSportResult($sportResultInput: SportResultInput!) {
+  addSportResult(sportResultInput : $sportResultInput){
+    uid
+  }
+}

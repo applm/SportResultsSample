@@ -1,13 +1,14 @@
 package com.mappl.data.sportresults
 
+import android.util.Log
 import com.mappl.core.network.GraphQLApi
-import com.mappl.core.network.SportResultsApi
 import com.mappl.model.SportResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 /**
@@ -19,22 +20,31 @@ private const val REFRESH_DELAY = 5000L
  * Repository for the sport results.
  */
 class SportResultsRepository @Inject constructor(
-    private val sportResultsRemote: GraphQLApi
+    private val sportResultsRemote: GraphQLApi //todo use interface
 ) {
     //  val sportResultsLocal = todo()
 
-    // private val _remoteSportResultsStream = MutableStateFlow<List<SportResult>>(emptyList())
-    // val remoteSportResultsStream = _remoteSportResultsStream.asStateFlow()
-    //
-    // suspend fun refresh() {
-    //     _remoteSportResultsStream.value = sportResultsRemote.getSportResults()
-    // }
-
-    val remoteSportResultsStream: Flow<List<SportResult>> = flow {
+    val periodicalRefreshSportResultsStream: Flow<List<SportResult>> = flow {
         while (true) {
-            emit(sportResultsRemote.getSportResults())
+            try {
+                emit(sportResultsRemote.getSportResults())
+            } catch (e: Exception) {
+                Log.e("SportResultsRepository", "Error while fetching sport results", e)
+            }
             delay(REFRESH_DELAY)
         }
+    }
+
+    private val remoteSportResultOnDemandStream = MutableStateFlow<List<SportResult>>(emptyList())
+
+    val remoteSportResultsStream: Flow<List<SportResult>> = merge(
+        periodicalRefreshSportResultsStream,
+        remoteSportResultOnDemandStream
+    ).conflate()
+
+    suspend fun addSportResult(duration: String, name: String, place: String) {
+        sportResultsRemote.addSportResult(duration, name, place)
+        remoteSportResultOnDemandStream.value = sportResultsRemote.getSportResults()
     }
 
     // /**

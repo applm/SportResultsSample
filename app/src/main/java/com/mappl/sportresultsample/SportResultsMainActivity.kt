@@ -20,11 +20,3 @@ class SportResultsMainActivity : ComponentActivity() {
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        SportResultCard(SportResult("","name", "place", "duration"))
-    }
-}

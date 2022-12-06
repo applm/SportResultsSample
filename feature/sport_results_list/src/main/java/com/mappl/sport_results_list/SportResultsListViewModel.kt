@@ -29,7 +29,7 @@ class SportResultsListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            sportResultsListRepository.remoteSportResultsStream
+            sportResultsListRepository.periodicalRefreshSportResultsStream
                 .catch { _uiState.value = SportResultListUiState.Error }
                 .collect { sportResults ->
                     _uiState.value = SportResultListUiState.Success(sportResults)

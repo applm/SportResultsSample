@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    api(project(":core:model"))
+    implementation(project(":data:sport_results"))
 
     implementation ("androidx.compose.ui:ui")
     implementation ("androidx.compose.ui:ui-tooling-preview")
