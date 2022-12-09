@@ -5,8 +5,9 @@ import com.mappl.model.SportResult
 import com.mappl.sportresultsample.core.network.AddSportResultMutation
 import com.mappl.sportresultsample.core.network.GetListOfSportResultsQuery
 import com.mappl.sportresultsample.core.network.type.SportResultInput
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import kotlin.time.Duration
 
 /**
  * Interface to the GraphQL API queries and mutations.
@@ -29,10 +30,18 @@ class GraphQLApi @Inject constructor(private val apolloClient: ApolloClient) : S
         }
     }
 
-    override suspend fun addSportResult(duration: String, name: String, place: String) {
-        apolloClient.mutation(AddSportResultMutation(SportResultInput(duration, name, place))).execute().let { response ->
+    override fun addSportResult(duration: String, name: String, place: String) : Flow<SportResult> {
+        return apolloClient.mutation(AddSportResultMutation(SportResultInput(duration, name, place)))
+            .toFlow().map { response ->
             if (response.hasErrors()) {
                 throw Exception("Error while adding sport result: ${response.errors}")
+            } else {
+                SportResult(
+                    uid = response.data?.addSportResult?.uid ?: "",
+                    name = name,
+                    place = place,
+                    duration = duration
+                )
             }
         }
     }

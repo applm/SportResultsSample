@@ -7,6 +7,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class SportResultsRepository @Inject constructor(
 ) {
     //  val sportResultsLocal = todo()
 
-    val periodicalRefreshSportResultsStream: Flow<List<SportResult>> = flow {
+    private val periodicalRefreshSportResultsStream: Flow<List<SportResult>> = flow {
         while (true) {
             try {
                 emit(sportResultsRemote.getSportResults())
@@ -42,9 +43,19 @@ class SportResultsRepository @Inject constructor(
         remoteSportResultOnDemandStream
     ).conflate()
 
-    suspend fun addSportResult(duration: String, name: String, place: String) {
-        sportResultsRemote.addSportResult(duration, name, place)
-        remoteSportResultOnDemandStream.value = sportResultsRemote.getSportResults()
+    /**
+     * Create flow that adds a sport result to the remote database and update list flow.
+     *
+     * @param duration duration of the sport result
+     * @param name name of the sport result
+     * @param place place of the sport result
+     * @return uid of the newly created sport result
+     */
+    fun addSportResultFlow(duration: String, name: String, place: String): Flow<String> {
+        return sportResultsRemote.addSportResult(duration, name, place).flatMapLatest {
+            remoteSportResultOnDemandStream.value = sportResultsRemote.getSportResults()
+            flow { emit(it.uid) }
+        }
     }
 
     // /**
