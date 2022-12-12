@@ -10,21 +10,21 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
- * Interface to the GraphQL API queries and mutations.
+ * Implementation of GraphQL API queries and mutations.
  */
-class GraphQLApi @Inject constructor(private val apolloClient: ApolloClient) : SportResultsApi {
+class GraphQLSportResultsDataSource @Inject constructor(private val apolloClient: ApolloClient) : SportResultsDataSource {
 
-    override suspend fun getSportResults(): List<SportResult> {
-        apolloClient.query(GetListOfSportResultsQuery()).execute().let { response ->
+    override fun getSportResults(): Flow<List<SportResult>> {
+        return apolloClient.query(GetListOfSportResultsQuery()).toFlow().map { response ->
             if (response.hasErrors()) {
                 throw Exception("Error while fetching sport results: ${response.errors}")
             }
-            return response.data?.listSportResults?.map { sportResult ->
+            response.data?.listSportResults?.map { sportResult ->
                 SportResult(
-                    uid = sportResult.uid,
-                    name = sportResult.name,
-                    place = sportResult.place,
-                    duration = sportResult.duration
+                    sportResult.uid,
+                    sportResult.duration,
+                    sportResult.name,
+                    sportResult.place
                 )
             } ?: emptyList()
         }

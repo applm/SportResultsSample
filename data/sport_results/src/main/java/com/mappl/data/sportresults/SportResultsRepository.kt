@@ -1,7 +1,7 @@
 package com.mappl.data.sportresults
 
 import android.util.Log
-import com.mappl.core.network.GraphQLApi
+import com.mappl.core.network.GraphQLSportResultsDataSource
 import com.mappl.model.SportResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.single
 import javax.inject.Inject
 
 /**
@@ -21,14 +22,14 @@ private const val REFRESH_DELAY = 5000L
  * Repository for the sport results.
  */
 class SportResultsRepository @Inject constructor(
-    private val sportResultsRemote: GraphQLApi //todo use interface
+    private val sportResultsRemote: GraphQLSportResultsDataSource //todo use interface
 ) {
     //  val sportResultsLocal = todo()
 
     private val periodicalRefreshSportResultsStream: Flow<List<SportResult>> = flow {
         while (true) {
             try {
-                emit(sportResultsRemote.getSportResults())
+                emit(sportResultsRemote.getSportResults().single())
             } catch (e: Exception) {
                 Log.e("SportResultsRepository", "Error while fetching sport results", e)
             }
@@ -53,18 +54,8 @@ class SportResultsRepository @Inject constructor(
      */
     fun addSportResultFlow(duration: String, name: String, place: String): Flow<String> {
         return sportResultsRemote.addSportResult(duration, name, place).flatMapLatest {
-            remoteSportResultOnDemandStream.value = sportResultsRemote.getSportResults()
+            remoteSportResultOnDemandStream.value = sportResultsRemote.getSportResults().single()
             flow { emit(it.uid) }
         }
     }
-
-    // /**
-    //  * Get all sport results from remote data source.
-    //  */
-    // fun getRemoteSportResults(): Flow<List<SportResult>> =
-    //
-    // /**
-    //  * Get all sport results from local data source.
-    //  */
-    // fun getLocalSportResults(): Flow<List<SportResult>> = emptyList() // todo()
 }
