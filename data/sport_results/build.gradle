@@ -1,6 +1,6 @@
 plugins {
-    id 'nowinandroid.android.library'
-    id 'nowinandroid.android.hilt'
+    id 'sportresultsample.android.library'
+    id 'sportresultsample.android.hilt'
 }
 
 android {

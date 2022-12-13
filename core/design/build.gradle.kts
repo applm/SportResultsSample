@@ -1,6 +1,6 @@
 plugins {
-    id("nowinandroid.android.library")
-    id("nowinandroid.android.library.compose")
+    id("sportresultsample.android.library")
+    id("sportresultsample.android.library.compose")
 }
 
 android {

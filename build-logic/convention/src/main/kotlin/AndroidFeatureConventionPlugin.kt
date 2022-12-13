@@ -26,8 +26,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply {
-                apply("nowinandroid.android.library")
-                apply("nowinandroid.android.hilt")
+                apply("sportresultsample.android.library")
+                apply("sportresultsample.android.hilt")
             }
             // extensions.configure<LibraryExtension> {
             //     defaultConfig {

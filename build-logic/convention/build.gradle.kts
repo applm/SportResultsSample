@@ -18,7 +18,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "com.google.samples.apps.nowinandroid.buildlogic"
+group = "com.mappl.sportresultsample.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -33,44 +33,32 @@ dependencies {
 gradlePlugin {
     plugins {
         register("androidApplicationCompose") {
-            id = "nowinandroid.android.application.compose"
+            id = "sportresultsample.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
         register("androidApplication") {
-            id = "nowinandroid.android.application"
+            id = "sportresultsample.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
-        register("androidApplicationJacoco") {
-            id = "nowinandroid.android.application.jacoco"
-            implementationClass = "AndroidApplicationJacocoConventionPlugin"
-        }
         register("androidLibraryCompose") {
-            id = "nowinandroid.android.library.compose"
+            id = "sportresultsample.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
         register("androidLibrary") {
-            id = "nowinandroid.android.library"
+            id = "sportresultsample.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
         register("androidFeature") {
-            id = "nowinandroid.android.feature"
+            id = "sportresultsample.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
-        register("androidLibraryJacoco") {
-            id = "nowinandroid.android.library.jacoco"
-            implementationClass = "AndroidLibraryJacocoConventionPlugin"
-        }
         register("androidTest") {
-            id = "nowinandroid.android.test"
+            id = "sportresultsample.android.test"
             implementationClass = "AndroidTestConventionPlugin"
         }
         register("androidHilt") {
-            id = "nowinandroid.android.hilt"
+            id = "sportresultsample.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
-        }
-        register("firebase-perf") {
-            id = "nowinandroid.firebase-perf"
-            implementationClass = "FirebasePerfConventionPlugin"
         }
     }
 }

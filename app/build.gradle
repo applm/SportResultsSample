@@ -1,7 +1,7 @@
 plugins {
-    id("nowinandroid.android.application")
-    id("nowinandroid.android.application.compose")
-    id("nowinandroid.android.hilt")
+    id("sportresultsample.android.application")
+    id("sportresultsample.android.application.compose")
+    id("sportresultsample.android.hilt")
 }
 
 android {

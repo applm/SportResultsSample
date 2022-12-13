@@ -15,7 +15,7 @@
  */
 
 import com.android.build.gradle.TestExtension
-import com.google.samples.apps.nowinandroid.configureKotlinAndroid
+import com.mappl.sportresultsample.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
